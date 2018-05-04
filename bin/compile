@@ -22,4 +22,20 @@ source $BP_DIR/lib/utils
 
 export_env_dir $ENV_DIR
 
-apt_install libxpm4 libxrender1 libgtk2.0-0 libnss3 libgconf-2-4 gtk2-engines-pixbuf xfonts-cyrillic xfonts-100dpi xfonts-75dpi xfonts-base xfonts-scalable xorg xvfb firefox
+apt_install libxpm4 libxrender1 libgtk2.0-0 libnss3 libgconf-2-4 gtk2-engines-pixbuf x11-xkb-utils xvfb x11-xkb-utils xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic libxfont1 xvfb firefox
+
+# symlink libs to where Xvfb searches
+ln -s /lib/x86_64-linux-gnu/libudev.so.1 $BUILD_DIR/.apt/usr/lib/libudev.so.0
+ln -s /app/.apt/usr/lib/x86_64-linux-gnu/libXfont.so.1 $BUILD_DIR/.apt/usr/lib/libXfont.so.1
+
+# patch Xvfb to use /app/.. paths instead of hardcoded wrong values
+sed -i.bak s/usr\\/bin/app\\/ubi/g $BUILD_DIR/.apt/usr/bin/Xvfb
+sed -i.bak s/usr\\/share\\/fonts/app\\/usr-s-fonts/g $BUILD_DIR/.apt/usr/bin/Xvfb
+# create symlinks for Xvfb to use /app/.apt/usr/...
+ln -s /app/.apt/usr/bin $BUILD_DIR/ubi
+ln -s /app/.apt/usr/share/fonts $BUILD_DIR/usr-s-fonts
+
+# run mkfontdir with binaries from inside dyno
+export PATH="$PATH:$BUILD_DIR/.apt/usr/bin"
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$BUILD_DIR/.apt/usr/lib:$BUILD_DIR/.apt/usr/lib/x86_64-linux-gnu"
+find $BUILD_DIR/.apt/usr/share/fonts/X11 -type d | xargs $BUILD_DIR/.apt/usr/bin/mkfontdir
