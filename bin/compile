@@ -16,6 +16,6 @@ source $BP_DIR/lib/utils
 export_env_dir $ENV_DIR
 
 cd $BUILD_DIR
-apt_install software-properties-common
+apt_install python-software-properties software-properties-common
 add-apt-repository ppa:ubuntu-mozilla-daily/ppa
 apt_install firefox-trunk
