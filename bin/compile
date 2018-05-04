@@ -7,5 +7,15 @@ set -o pipefail   # don't ignore exit codes when piping output
 set -o nounset    # fail on unset variables
 unset GIT_DIR     # Avoid GIT_DIR leak from previous build steps
 
+BUILD_DIR=${1:-}
+CACHE_DIR=${2:-}
+ENV_DIR=${3:-}
+BP_DIR=$(cd $(dirname ${0:-}); cd ..; pwd)
+
+source $BP_DIR/lib/utils
+export_env_dir $ENV_DIR
+
+cd $BUILD_DIR
+apt_install software-properties-common
 add-apt-repository ppa:ubuntu-mozilla-daily/ppa
 apt_install firefox-trunk
