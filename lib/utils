@@ -13,12 +13,11 @@ function apt_install(){
 
   local apt_cache_dir="$CACHE_DIR/apt/cache"
   local apt_state_dir="$CACHE_DIR/apt/state"
-  local apt_sources_file="$BUILD_DIR/sources.list.d/default.list"
   
   mkdir -p "$apt_cache_dir/archives/partial"
   mkdir -p "$apt_state_dir/lists/partial"
   
-  local apt_options="-o debug::nolocking=true -o dir::cache=$apt_cache_dir -o dir::state=$apt_state_dir -o dir::etc::sourcelist=$apt_sources_file"
+  local apt_options="-o debug::nolocking=true -o dir::cache=$apt_cache_dir -o dir::state=$apt_state_dir"
   
   apt-get $apt_options clean | indent
   
@@ -31,7 +30,7 @@ function apt_install(){
       curl -s -L -z $package_file -o $package_file $package 2>&1 | indent
     else
       apt-get $apt_options -y --allow-downgrades --allow-remove-essential --allow-change-held-packages -d install --reinstall $package | indent
-      apt-get $apt_options -y --allow-downgrades --allow-remove-essential --allow-change-held-packages -d build-dep $package | indent
+      apt-get $apt_options -y --allow-downgrades --allow-remove-essential --allow-change-held-packages download $(apt-rdepends $package|grep -v "^ ") | indent
     fi
   done
   
