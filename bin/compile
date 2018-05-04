@@ -11,27 +11,17 @@ BUILD_DIR=${1:-}
 CACHE_DIR=${2:-}
 ENV_DIR=${3:-}
 
-apt-get install libgtk-3-dev
+BP_DIR=$(cd $(dirname ${0:-}); cd ..; pwd)
 
-VERSION=59.0.3
-LANG=en-US
-PLATFORM=linux64
+mkdir -p $BUILD_DIR/.profile.d
+cp $BP_DIR/profile/* $BUILD_DIR/.profile.d/
 
-ARCHIVE_NAME=firefox
-FILE_NAME=${ARCHIVE_NAME}-${VERSION}.tar.bz2
-BUILDPACK_FIREFOX_PACKAGE="https://download.mozilla.org/?product=firefox-${VERSION}-SSL&os=${PLATFORM}&lang=${LANG}"
+source $BP_DIR/lib/utils
 
-mkdir -p $CACHE_DIR
-if ! [ -e $CACHE_DIR/$FILE_NAME ]; then
-  echo "-----> Fetching Firefox package from ${BUILDPACK_FIREFOX_PACKAGE}"
-  curl $BUILDPACK_FIREFOX_PACKAGE -L -o $CACHE_DIR/$FILE_NAME
-fi
+export_env_dir $ENV_DIR
 
-echo "-----> Extracting Firefox binaries to ${BUILD_DIR}/vendor/${ARCHIVE_NAME}"
-mkdir -p $CACHE_DIR/$ARCHIVE_NAME
-mkdir -p $BUILD_DIR/vendor
-tar jxf $CACHE_DIR/$FILE_NAME -C $CACHE_DIR
-mv $CACHE_DIR/$ARCHIVE_NAME $BUILD_DIR/vendor/
+apt_install xvfb firefox
 
-export PATH=$PATH:$BUILD_DIR/vendor/firefox
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$BUILD_DIR/vendor/firefox
+export DISPLAY=:1.0
+
+xvfb :1 &
