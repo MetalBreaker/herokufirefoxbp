@@ -33,11 +33,10 @@ function apt_install(){
     fi
   done
   
-  mkdir -p "$BUILD_DIR/.apt"
-
-  for DEB in $(ls -1 $apt_cache_dir/archives/*.deb); do
-    dpkg -x $DEB "$BUILD_DIR/.apt/"
-  done
+ # mkdir -p "$BUILD_DIR/.apt"
+  #for DEB in $(ls -1 $apt_cache_dir/archives/*.deb); do
+   # dpkg -x $DEB "$BUILD_DIR/.apt/"
+ # done
   
   export PATH="$PATH:$BUILD_DIR/.apt/usr/bin"
   export LD_LIBRARY_PATH="$BUILD_DIR/.apt/usr/lib/x86_64-linux-gnu:$BUILD_DIR/.apt/usr/lib/i386-linux-gnu:$BUILD_DIR/.apt/usr/lib:${LD_LIBRARY_PATH-}"
