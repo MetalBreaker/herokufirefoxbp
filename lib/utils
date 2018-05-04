@@ -30,11 +30,6 @@ function apt_install(){
       curl -s -L -z $package_file -o $package_file $package 2>&1 | indent
     else
       apt-get $apt_options --yes --allow-downgrades --allow-remove-essential --allow-change-held-packages -d install --reinstall $package | indent
-      apt-get $apt_options --yes --allow-downgrades --allow-remove-essential --allow-change-held-packages -d install --reinstall $(apt-cache depends --recurse --no-recommends --no-suggests --no-conflicts --no-breaks --no-replaces --no-enhances --no-pre-depends $package | grep "^\w" | sort -u) | indent
-      echo $(apt-cache depends --recurse --no-recommends --no-suggests --no-conflicts --no-breaks --no-replaces --no-enhances --no-pre-depends $package | grep "^\w" | sort -u)
-      echo $(apt-cache depends --recurse --no-recommends --no-suggests --no-conflicts --no-breaks --no-replaces --no-enhances --no-pre-depends $package | grep " \w" | sort -u)
-      echo $(apt-cache depends --recurse --no-recommends --no-suggests --no-conflicts --no-breaks --no-replaces --no-enhances --no-pre-depends $package | grep "\w" | sort -u)
-      echo $(apt-cache depends --recurse --no-recommends --no-suggests --no-conflicts --no-breaks --no-replaces --no-enhances --no-pre-depends $package)
     fi
   done
   
