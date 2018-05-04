@@ -17,8 +17,8 @@ export_env_dir $ENV_DIR
 
 cd $BUILD_DIR
 
-echo "deb http://ppa.launchpad.net/ubuntu-mozilla-daily/ppa/ubuntu xenial main" | sudo tee -a /etc/apt/sources.list
-echo "deb-src http://ppa.launchpad.net/ubuntu-mozilla-daily/ppa/ubuntu xenial main" | sudo tee -a /etc/apt/sources.list
+echo "deb http://ppa.launchpad.net/ubuntu-mozilla-daily/ppa/ubuntu xenial main" | tee -a /etc/apt/sources.list
+echo "deb-src http://ppa.launchpad.net/ubuntu-mozilla-daily/ppa/ubuntu xenial main" | tee -a /etc/apt/sources.list
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B34505EA326FEAEA07E3618DEF4186FE247510BE
 
 apt_install firefox-trunk
