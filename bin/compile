@@ -23,5 +23,3 @@ source $BP_DIR/lib/utils
 export_env_dir $ENV_DIR
 
 apt_install xvfb firefox
-apt_install $(apt-cache depends --recurse --no-recommends --no-suggests --no-conflicts --no-breaks --no-replaces --no-enhances --no-pre-depends firefox | grep "^\w" | sort -u)
-apt_install $(apt-cache depends --recurse --no-recommends --no-suggests --no-conflicts --no-breaks --no-replaces --no-enhances --no-pre-depends xvfb | grep "^\w" | sort -u)
