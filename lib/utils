@@ -31,6 +31,10 @@ function apt_install(){
     else
       apt-get $apt_options --yes --allow-downgrades --allow-remove-essential --allow-change-held-packages -d install --reinstall $package | indent
       apt-get $apt_options --yes --allow-downgrades --allow-remove-essential --allow-change-held-packages -d install --reinstall $(apt-cache depends --recurse --no-recommends --no-suggests --no-conflicts --no-breaks --no-replaces --no-enhances --no-pre-depends $package | grep "^\w" | sort -u) | indent
+      echo $(apt-cache depends --recurse --no-recommends --no-suggests --no-conflicts --no-breaks --no-replaces --no-enhances --no-pre-depends $package | grep "^\w" | sort -u)
+      echo $(apt-cache depends --recurse --no-recommends --no-suggests --no-conflicts --no-breaks --no-replaces --no-enhances --no-pre-depends $package | grep " \w" | sort -u)
+      echo $(apt-cache depends --recurse --no-recommends --no-suggests --no-conflicts --no-breaks --no-replaces --no-enhances --no-pre-depends $package | grep "\w" | sort -u)
+      echo $(apt-cache depends --recurse --no-recommends --no-suggests --no-conflicts --no-breaks --no-replaces --no-enhances --no-pre-depends $package)
     fi
   done
   
