@@ -20,4 +20,4 @@ source $BP_DIR/lib/utils
 
 export_env_dir $ENV_DIR
 
-apt_install xvfb firefox
+apt_install libxtst6 xvfb firefox
