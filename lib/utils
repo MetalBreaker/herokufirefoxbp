@@ -30,6 +30,7 @@ function apt_install(){
       curl -s -L -z $package_file -o $package_file $package 2>&1 | indent
     else
       apt-get $apt_options -y --allow-downgrades --allow-remove-essential --allow-change-held-packages -d install --reinstall $package | indent
+      apt-get $apt_options -y --allow-downgrades --allow-remove-essential --allow-change-held-packages -d build-dep $package | indent
     fi
   done
   
@@ -39,7 +40,6 @@ function apt_install(){
     dpkg -x $DEB "$BUILD_DIR/.apt/"
   done
   
-  apt-get -y $apt_options install -f
   export PATH="$PATH:$BUILD_DIR/.apt/usr/bin"
   export LD_LIBRARY_PATH="$BUILD_DIR/.apt/usr/lib/x86_64-linux-gnu:$BUILD_DIR/.apt/usr/lib/i386-linux-gnu:$BUILD_DIR/.apt/usr/lib:${LD_LIBRARY_PATH-}"
   export LIBRARY_PATH="$BUILD_DIR/.apt/usr/lib/x86_64-linux-gnu:$BUILD_DIR/.apt/usr/lib/i386-linux-gnu:$BUILD_DIR/.apt/usr/lib:${LIBRARY_PATH-}"
