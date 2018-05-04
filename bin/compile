@@ -15,8 +15,8 @@ BP_DIR=$(cd $(dirname ${0:-}); cd ..; pwd)
 
 mkdir -p $BUILD_DIR/.profile.d
 cp $BP_DIR/profile/* $BUILD_DIR/.profile.d/
-chattr +i /etc/apt/sources.list.d/
-cp $BP_DIR/sources/* /etc/apt/sources.list.d/
+mkdir -p $BUILD_DIR/sources.list.d
+cp $BP_DIR/sources/* $BUILD_DIR/sources.list.d/
 
 source $BP_DIR/lib/utils
 
