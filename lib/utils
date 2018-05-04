@@ -29,8 +29,7 @@ function apt_install(){
       local package_file=$apt_cache_dir/archives/$package_name.deb
       curl -s -L -z $package_file -o $package_file $package 2>&1 | indent
     else
-      apt-get $apt_options --yes --force-yes --allow-downgrades --allow-remove-essential --allow-change-held-packages -d install --reinstall $package | indent
-      apt-get $apt_options --yes --force-yes --allow-downgrades --allow-remove-essential --allow-change-held-packages -d install --reinstall $(apt-cache depends --recurse --no-recommends --no-suggests --no-conflicts --no-breaks --no-replaces --no-enhances --no-pre-depends $package|grep "^\w") | indent
+      apt-get $apt_options --yes --allow-downgrades --allow-remove-essential --allow-change-held-packages install --reinstall $package | indent
     fi
   done
   
