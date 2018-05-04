@@ -5,4 +5,5 @@ export INCLUDE_PATH="$INCLUDE_PATH:$HOME/.apt/usr/include"
 export CPATH="$INCLUDE_PATH"
 export CPPPATH="$INCLUDE_PATH"
 export apt_CONFIG_PATH="$apt_CONFIG_PATH:$HOME/.apt/usr/lib/x86_64-linux-gnu/aptconfig:$HOME/.apt/usr/lib/i386-linux-gnu/aptconfig:$HOME/.apt/usr/lib/aptconfig"
-export DISPLAY=:1.0
+Xvfb :1 </dev/null &> /dev/null &
+export DISPLAY=:1
